@@ -1,12 +1,16 @@
 import { join } from "path";
 import { PluggableList } from "unified";
 import rehypeHeaders from "./rehype-headers";
+import rehypeImages from "./rehype-images";
 import rehypeLinks from "./rehype-links";
 import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkImportFrontmatter from "./remark-import-frontmatter";
 import rehypeHighlight from "rehype-highlight";
 import remarkCopyLinkedFiles from "remark-copy-linked-files";
+
+const destinationDir = join(process.cwd(), "public/assets");
+const staticPath = process.env.NEXT_PUBLIC_ROOT_DIR + "/assets/";
 
 interface Plugins {
   rehypePlugins: PluggableList;
@@ -20,8 +24,8 @@ const plugins: Plugins = {
     [
       remarkCopyLinkedFiles,
       {
-        destinationDir: join(process.cwd(), "public/assets"),
-        staticPath: process.env.NEXT_PUBLIC_ROOT_DIR + "/assets/",
+        destinationDir,
+        staticPath,
         ignoreFileExtensions: [".md", ".mdx"],
       },
     ],
@@ -29,6 +33,13 @@ const plugins: Plugins = {
   rehypePlugins: [
     rehypeSlug,
     rehypeLinks,
+    [
+      rehypeImages,
+      {
+        destinationDir,
+        staticPath,
+      },
+    ],
     [
       rehypeHighlight,
       { aliases: { bash: ["bsh", "systemd"], yaml: ["conf", "toml"] } },
