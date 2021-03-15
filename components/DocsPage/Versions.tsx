@@ -14,6 +14,8 @@ import Box, { BoxProps } from "components/Box";
 import { ReactComponent as ArrorwSVG } from "./assets/arrow.svg";
 import type { VersionsInfo } from "./types";
 
+const root = process.env.NEXT_PUBLIC_ROOT_DIR;
+
 const Versions = ({
   current,
   latest,
@@ -27,7 +29,8 @@ const Versions = ({
 
   const navigateToVersion = useCallback(
     (version: string) => {
-      const href = version === latest ? "/" : `/ver/${version}/`;
+      const isLatest = version === latest;
+      const href = `${root}/${isLatest ? "" : `ver/${version}`}`;
 
       setCurrentItem(version);
       router.push(href);

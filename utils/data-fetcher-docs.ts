@@ -30,7 +30,11 @@ interface Config {
 const getConfigPath = (version: string) =>
   resolve("content", version, "docs/config.json");
 
-const normalizeDocsUrl = (version: string, url: string) => {
+export const normalizeDocsUrl = (
+  version: string,
+  url: string,
+  raw?: boolean
+) => {
   if (isExternalLink(url) || isHash(url)) {
     return url;
   }
@@ -41,7 +45,11 @@ const normalizeDocsUrl = (version: string, url: string) => {
     throw Error(`File ${configPath} misses trailing slash in '${url}' path.`);
   }
 
-  return (latest === version ? "" : `/ver/${version}`) + url;
+  const addVersion = raw || latest !== version;
+  const root = process.env.NEXT_PUBLIC_ROOT_DIR;
+  const prefix = `${root}${addVersion ? `/ver/${version}` : ""}`;
+
+  return prefix + url;
 };
 
 const normalizeDocsUrls = (

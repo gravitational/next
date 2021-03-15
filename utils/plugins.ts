@@ -9,8 +9,8 @@ import remarkImportFrontmatter from "./remark-import-frontmatter";
 import rehypeHighlight from "rehype-highlight";
 import remarkCopyLinkedFiles from "remark-copy-linked-files";
 
-const destinationDir = join(process.cwd(), "public/assets");
-const staticPath = process.env.NEXT_PUBLIC_ROOT_DIR + "/assets/";
+const destinationDir = join(process.cwd(), "public/static/assets");
+const staticPath = "/static/assets/";
 
 interface Plugins {
   rehypePlugins: PluggableList;

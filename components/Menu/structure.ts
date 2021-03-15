@@ -52,7 +52,7 @@ const menu: MenuCategoryProps[] = [
         icon: "stack",
         title: "Documentation",
         description: "Developer documenation for using Teleport",
-        href: "/teleport/docs/",
+        href: "/docs/",
       },
       {
         icon: "gamepad",

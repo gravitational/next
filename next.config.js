@@ -2,7 +2,6 @@
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
-
 const path = require("path");
 const mdxOptions = require("./.build/utils/plugins");
 const {
@@ -11,13 +10,13 @@ const {
   generateSitemap,
 } = require("./.build/utils/paths");
 
-const basePath = process.env.NEXT_PUBLIC_ROOT_DIR;
-
 module.exports = withBundleAnalyzer({
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   rewrites: async () => getLatestVersionRewirites(),
   redirects: async () => getRedirects(),
-  basePath,
+  images: {
+    path: "/_next/image/",
+  },
   trailingSlash: true,
   webpack: (config, options) => {
     if (!options.dev) generateSitemap();
@@ -36,7 +35,7 @@ module.exports = withBundleAnalyzer({
           limit: 1 * 1024,
           noquotes: true,
           fallback: "file-loader",
-          publicPath: `${basePath}/_next/static/images/`,
+          publicPath: `/_next/static/images/`,
           outputPath: "static/images/",
           name: "[hash].[ext]",
         },

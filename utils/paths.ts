@@ -25,12 +25,11 @@ const normalizeDocSlug = (slug: string, version: string) => {
   return isLatest ? slug.replace(`/ver/${latest}`, "") : slug;
 };
 
-export const getLatestVersionRewirites = () => {
-  return getSlugDataListForVersion(latest).map(({ slug, version }) => ({
-    source: normalizeDocSlug(slug, version),
-    destination: slug,
+export const getLatestVersionRewirites = () =>
+  getSlugDataListForVersion(latest).map(({ slug, version }) => ({
+    source: process.env.NEXT_PUBLIC_ROOT_DIR + normalizeDocSlug(slug, version),
+    destination: process.env.NEXT_PUBLIC_ROOT_DIR + slug,
   }));
-};
 
 export const generateSitemap = () => {
   const prefix =

@@ -28,8 +28,7 @@ export const getPath = (href: string) => {
 export const getHash = (href: string) => href.split("#")[1];
 
 export const buildCanonicalUrl = (router: NextRouter) => {
-  const { asPath, basePath } = router;
-  const path = getVersionAsPath(asPath);
+  const path = getVersionAsPath(router.asPath);
 
-  return `${host}${basePath}${path}`;
+  return `${host}${path}`;
 };

@@ -24,23 +24,10 @@ const Head = (meta: HeadProps) => {
   return (
     <NextHead>
       <title>{title}</title>
-      <link
-        rel="icon"
-        href={`${process.env.NEXT_PUBLIC_ROOT_DIR}/favicon.ico`}
-      />
-      <link
-        rel="icon"
-        href={`${process.env.NEXT_PUBLIC_ROOT_DIR}/favicon.svg`}
-        type="image/svg+xml"
-      />
-      <link
-        rel="apple-touch-icon"
-        href={`${process.env.NEXT_PUBLIC_ROOT_DIR}/apple.png`}
-      />
-      <link
-        rel="manifest"
-        href={`${process.env.NEXT_PUBLIC_ROOT_DIR}/manifest.webmanifest`}
-      />
+      <link rel="icon" href="/static/favicon.ico" />
+      <link rel="icon" href="/static/favicon.svg" type="image/svg+xml" />
+      <link rel="apple-touch-icon" href="/static/apple.png" />
+      <link rel="manifest" href="/static/manifest.webmanifest" />
       <link rel="canonical" href={url} />
       <meta name="description" content={description} />
       <meta name="author" content="Teleport" />

@@ -8,11 +8,10 @@
 /out/
 
 # production
-/build
-/public/assets
 /.build
-/pages/ver/*
-/public/sitemap.xml
+/public/static/assets
+/public/static/sitemap.xml
+/pages/docs/ver/*
 
 # misc
 .DS_Store

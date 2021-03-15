@@ -2,7 +2,7 @@ import { existsSync } from "fs";
 import sizeOf from "image-size";
 import { Transformer } from "unified";
 import { Element, Root } from "hast";
-import visit from "unist-util-visit";
+import visit from "unist-util-visit-parents";
 import { RehypeNode } from "./unist-types";
 import { isExternalLink, isHash } from "./url";
 
@@ -27,7 +27,7 @@ export default function rehypeImages({
   staticPath,
 }: RehypeImagesProps): Transformer {
   return (root: Root) => {
-    visit<Element>(root, [isLocalImg], (node) => {
+    visit<Element>(root, [isLocalImg], (node, ancestors) => {
       const { src } = node.properties;
 
       const localSrc = (src as string).replace(
@@ -41,6 +41,23 @@ export default function rehypeImages({
         node.properties.width = width;
         node.properties.height = height;
       }
+
+      const parent = ancestors[ancestors.length - 1] as Element;
+
+      if (
+        parent.type === "element" &&
+        parent.tagName === "p" &&
+        parent.children.length === 1
+      ) {
+        const grandparent = ancestors[ancestors.length - 2] as Element;
+        const parentIndex = grandparent.children.indexOf(parent);
+
+        if (parentIndex !== -1) {
+          grandparent.children[parentIndex] = node;
+        }
+      }
+
+      return visit.SKIP;
     });
   };
 }

@@ -4,7 +4,7 @@ const config = require("../config.json");
 
 const { versions } = config;
 
-const docsPagesRoot = "pages/ver";
+const docsPagesRoot = "pages/docs/ver";
 
 rmdirSync(docsPagesRoot, { recursive: true });
 mkdirSync(docsPagesRoot);
