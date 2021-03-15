@@ -1,4 +1,4 @@
-import { existsSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import sizeOf from "image-size";
 import { Transformer } from "unified";
 import { Element, Root } from "hast";
@@ -36,10 +36,16 @@ export default function rehypeImages({
       );
 
       if (existsSync(localSrc)) {
-        const { width, height } = sizeOf(localSrc);
+        const file = readFileSync(localSrc);
 
-        node.properties.width = width;
-        node.properties.height = height;
+        try {
+          const { width, height } = sizeOf(file);
+
+          node.properties.width = width;
+          node.properties.height = height;
+        } catch {
+          console.log({ localSrc });
+        }
       }
 
       const parent = ancestors[ancestors.length - 1] as Element;
@@ -55,9 +61,9 @@ export default function rehypeImages({
         if (parentIndex !== -1) {
           grandparent.children[parentIndex] = node;
         }
-      }
 
-      return visit.SKIP;
+        return visit.SKIP;
+      }
     });
   };
 }
