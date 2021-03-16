@@ -6,7 +6,11 @@ const { versions } = config;
 
 const docsPagesRoot = "pages/docs/ver";
 
-rmdirSync(docsPagesRoot, { recursive: true });
+if (existsSync(docsPagesRoot)) {
+  rmdirSync(docsPagesRoot, { recursive: true });
+}
+
+mkdirSync("pages/docs");
 mkdirSync(docsPagesRoot);
 
 versions.forEach((version) => {

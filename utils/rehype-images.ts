@@ -43,9 +43,7 @@ export default function rehypeImages({
 
           node.properties.width = width;
           node.properties.height = height;
-        } catch {
-          console.log({ localSrc });
-        }
+        } catch {}
       }
 
       const parent = ancestors[ancestors.length - 1] as Element;
